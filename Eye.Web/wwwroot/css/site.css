@@ -29,3 +29,22 @@ textarea {
     display: none
   }
 }
+
+
+.all-posts {
+    display: inline-block;
+}
+
+.all-posts .post-item {
+    width: 208px;
+    height: 350px;
+    float: left;
+    border: 1px solid #baafaf;
+    padding: 4px;
+    margin: 4px;
+}
+
+.post-item img {
+    width: 200px;
+    height: 250px;
+}

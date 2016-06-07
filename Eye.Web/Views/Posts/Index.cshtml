@@ -1,0 +1,16 @@
+﻿@{
+    ViewData["Title"] = "Products";
+}
+
+@model IEnumerable<Post>
+
+<div class="all-posts">
+    @foreach (var p in Model)
+    {
+        <div class="post-item">
+            <img src="@p.PhotoFullPath()" />
+            <div>@p.ItemName</div>
+            <div>@p.Price</div>
+        </div>
+    }
+</div>
