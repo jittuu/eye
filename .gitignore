@@ -163,3 +163,9 @@ packages/
 
 # ignore App_Data
 App_Data/
+
+# ignore node_modules
+node_modules
+
+# bower
+lib/
