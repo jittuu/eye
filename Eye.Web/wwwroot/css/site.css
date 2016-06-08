@@ -36,7 +36,7 @@ textarea {
 }
 
 .all-posts .post-item {
-    width: 208px;
+    width: 258px;
     height: 350px;
     float: left;
     border: 1px solid #baafaf;
@@ -45,6 +45,6 @@ textarea {
 }
 
 .post-item img {
-    width: 200px;
+    width: 250px;
     height: 250px;
 }

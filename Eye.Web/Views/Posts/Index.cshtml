@@ -2,10 +2,10 @@
     ViewData["Title"] = "Products";
 }
 
-@model IEnumerable<Post>
+@model PostListViewModel
 
 <div class="all-posts">
-    @foreach (var p in Model)
+    @foreach (var p in Model.Posts)
     {
         <div class="post-item">
             <img src="@p.PhotoFullPath()" />
@@ -14,3 +14,16 @@
         </div>
     }
 </div>
+
+<nav>
+    <ul class="pager">
+        @if(Model.PrevPage.HasValue)
+        {
+            <li class="previous"><a asp-controller="Posts" asp-action="Index" asp-route-page="@Model.PrevPage">Prev</a></li>
+        }
+        @if (Model.NextPage.HasValue)
+        {
+            <li class="next"><a asp-controller="Posts" asp-action="Index" asp-route-page="@Model.NextPage">Next</a></li>
+        }
+    </ul>
+</nav>

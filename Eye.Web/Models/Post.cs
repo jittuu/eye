@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Eye.Web
+namespace Eye.Web.Models
 {
     public class Post
     {
