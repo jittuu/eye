@@ -1,2 +1,2 @@
 [config]
-project = Eye.Web.sln
+command = deploy.cmd
