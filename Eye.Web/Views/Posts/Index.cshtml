@@ -13,6 +13,15 @@
             </a>
             <div class="mm-text">@p.ItemName</div>
             <div><span class="price">@p.Price</span></div>
+            <div class="post-footer">
+                <div>
+                    <span><i class="fa fa-thumbs-up" aria-hidden="true"></i>@p.TotalLikes</span>
+                </div>
+                <div>
+                    <span><i class="fa fa-share-alt" aria-hidden="true"></i>@p.Shares</span>
+                </div>
+                <span class="mm-text shop-name">@p.ShopName</span>
+            </div>
         </div>
     }
 </div>
@@ -21,11 +30,11 @@
     <ul class="pager">
         @if(Model.PrevPage.HasValue)
         {
-            <li class="previous"><a asp-controller="Posts" asp-action="Index" asp-route-page="@Model.PrevPage">Prev</a></li>
+            <li class="previous"><a asp-controller="Posts" asp-action="Index" asp-route-page="@Model.PrevPage"><i class="fa fa-arrow-left" aria-hidden="true"></i> Prev</a></li>
         }
         @if (Model.NextPage.HasValue)
         {
-            <li class="next"><a asp-controller="Posts" asp-action="Index" asp-route-page="@Model.NextPage">Next</a></li>
+            <li class="next"><a asp-controller="Posts" asp-action="Index" asp-route-page="@Model.NextPage">Next <i class="fa fa-arrow-right" aria-hidden="true"></i></a></li>
         }
     </ul>
 </nav>

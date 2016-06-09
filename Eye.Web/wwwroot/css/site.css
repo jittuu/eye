@@ -42,13 +42,12 @@ textarea {
 
 .all-posts .post-item {
     width: 258px;
-    height: 330px;
+    height: 360px;
     float: left;
 }
 
 .post-item {
     border: 1px solid #baafaf;
-    padding: 4px;
     margin: 8px;
     display: flex;
     flex-direction: column;
@@ -60,7 +59,7 @@ textarea {
 .post-item img {
     width: 250px;
     height: 250px;
-    margin-bottom: 5px;
+    margin: 4px;
 }
 
 .mm-text {
@@ -74,4 +73,24 @@ textarea {
     margin: 4px;
     align-self: flex-end;
     color: #823a7a;
+}
+
+.post-footer {
+    width: 100%;
+    display: flex;
+    border-top: 1px solid #d9c3d7;
+    padding: 4px;
+}
+
+.post-footer > div {
+    padding: 3px;
+}
+
+.post-footer i {
+    margin-right: 5px;
+}
+
+.post-footer .shop-name {
+    flex: 1;
+    text-align: right;
 }
