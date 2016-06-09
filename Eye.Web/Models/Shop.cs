@@ -25,5 +25,7 @@ namespace Eye.Web.Models
         public string PageURL { get; set; }
 
         public string ImageContainer { get; set; }
+
+        public int TotalPosts { get; set; }
     }
 }

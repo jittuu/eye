@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Shops";
+}
+
+@model IEnumerable<Shop>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Likes</th>
+            <th>Last Posted Date</th>
+            <th>In Stock</th>
+            <th>Pre Order</th>
+            <th>Pre Paid</th>
+            <th>Posts Count</th>
+            <th>Facebook</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ var no = 0;}
+        @foreach (var s in Model)
+        {
+            no++;
+            <tr>
+                <td>@no</td>
+                <td><span class="mm-text">@s.Name</span></td>
+                <td>@s.TotalLikes</td>
+                <td>@s.LastPostedDate.ToString("dd-MMM-yyyy")</td>
+                <td>
+                    @if (s.IsOnStock)
+                    {
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    }
+                </td>
+                <td>
+                    @if (s.IsPreOrder)
+                    {
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    }
+                </td>
+                <td>
+                    @if (s.IsPrePaid)
+                    {
+                        <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    }
+                </td>
+                <td>@s.TotalPosts</td>
+                <td><a href="@s.PageURL" target="_blank">Link </a><i class="fa fa-external-link fa-fw" aria-hidden="true"></i></td>
+            </tr>
+        }
+    </tbody>
+</table>
