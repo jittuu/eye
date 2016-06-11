@@ -51,5 +51,33 @@ namespace Eye.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Id = id;
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(Shop shop)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                ViewBag.Id = shop.Id;
+                return View();
+            }
+
+            var saved = await new UpdateShopAction(_conn).RunAsync(shop);
+            if (saved < 1)
+            {
+                return StatusCode(500);
+            }
+
+            TempData["alert-msg"] = string.Format("Shop ({0}) is updated successfully.", shop.Name);
+
+            return RedirectToAction("Index");
+
+        }
     }
 }

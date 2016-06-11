@@ -19,7 +19,7 @@
             <th>Pre Order</th>
             <th>Pre Paid</th>
             <th>Posts Count</th>
-            <th>Facebook</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -51,7 +51,12 @@
                     }
                 </td>
                 <td>@s.TotalPosts</td>
-                <td><a href="@s.PageURL" target="_blank">Link </a><i class="fa fa-external-link fa-fw" aria-hidden="true"></i></td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@s.Id">Edit</a>
+                    <a href="@s.PageURL" target="_blank">
+                        <i class="fa fa-facebook fa-fw" aria-hidden="true"></i>
+                    </a>
+                </td>
             </tr>
         }
     </tbody>
