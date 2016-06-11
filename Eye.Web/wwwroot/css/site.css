@@ -22,6 +22,14 @@ textarea {
     max-width: 280px;
 }
 
+.top-action {
+    margin-bottom: 10px;
+}
+
+[readonly].form-control {
+    background-color: #fff;
+}
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
@@ -97,4 +105,8 @@ textarea {
 
 .fa-check-circle {
     color: forestgreen;
+}
+
+.no-max {
+    max-width: none;
 }

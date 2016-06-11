@@ -37,10 +37,14 @@ namespace Eye.Web
             // Add framework services.
             services.AddMvc(opt => { opt.Filters.Add(new AuthorizeFilter(requireAuth)); });
 
+            services.AddMemoryCache();
+            services.AddSession();
+
             services.AddAuthentication(
                 SharedOptions => SharedOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
             services.AddScoped<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("Default")));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +74,8 @@ namespace Eye.Web
                 CallbackPath = Configuration["Authentication:AzureAd:CallbackPath"]
             });
 
+
+            app.UseSession();
 
             app.UseMvc(routes =>
             {

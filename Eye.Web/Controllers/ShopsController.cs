@@ -16,10 +16,40 @@ namespace Eye.Web.Controllers
             _conn = conn;
         }
 
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var shops = await new AllShopsQuery(_conn).Run();
             return View(shops.OrderByDescending(s => s.TotalLikes));
+        }
+
+        [HttpGet]
+        public IActionResult New()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> New(Shop shop)
+        {
+            if (!this.ModelState.IsValid)
+            {
+                return View();
+            }
+
+            shop.ImageContainer = Guid.NewGuid().ToString("N");
+            shop.CreatedAt = DateTimeOffset.UtcNow;
+            shop.CreatedBy = User.Identity.Name;
+
+            var saved = await new SaveNewShopAction(_conn).RunAsync(shop);
+            if (saved < 1)
+            {
+                return StatusCode(500);
+            }
+
+            TempData["alert-msg"] = string.Format("New Shop ({0}) is saved successfully.", shop.Name);
+
+            return RedirectToAction("Index");
         }
     }
 }

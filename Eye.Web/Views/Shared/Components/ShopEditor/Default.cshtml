@@ -1,0 +1,48 @@
+﻿@model Shop
+
+<form method="post" asp-controller="Shops" asp-action="@ViewBag.action" class="well col-md-8">
+    @if (Model != null && Model.Id > 0)
+    {
+        <input asp-for="Id" type="hidden" />
+    }
+
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name">Name</label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="TotalLikes">Likes</label>
+        <input asp-for="TotalLikes" class="form-control" />
+        <span asp-validation-for="TotalLikes" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="LastPostedDate">Last Posted Date</label>
+        <input asp-for="LastPostedDate" class="form-control calendar" readonly="readonly" />
+        <span asp-validation-for="LastPostedDate" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="PageURL">Page URL</label>
+        <input asp-for="PageURL" class="form-control no-max" />
+        <span asp-validation-for="PageURL" class="text-danger"></span>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input asp-for="IsOnStock" /> On Stock
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input asp-for="IsPreOrder" /> Pre-Order
+        </label>
+    </div>
+    <div class="checkbox">
+        <label>
+            <input asp-for="IsPrePaid" /> Pre-Paid
+        </label>
+    </div>
+
+    <hr />
+    <button type="submit" class="btn btn-success pull-right">Submit</button>
+</form>
