@@ -1,11 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
+﻿using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -19,8 +18,10 @@ namespace Eye.Web
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-                .AddEnvironmentVariables();
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            builder.AddEnvironmentVariables();
+
             Configuration = builder.Build();
         }
 
@@ -29,8 +30,15 @@ namespace Eye.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var requireAuth = new AuthorizationPolicyBuilder()
+                                        .RequireAuthenticatedUser()
+                                        .Build();
+
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(opt => { opt.Filters.Add(new AuthorizeFilter(requireAuth)); });
+
+            services.AddAuthentication(
+                SharedOptions => SharedOptions.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme);
 
             services.AddScoped<IDbConnection>(_ => new SqlConnection(Configuration.GetConnectionString("Default")));
         }
@@ -52,6 +60,16 @@ namespace Eye.Web
             }
 
             app.UseStaticFiles();
+
+            app.UseCookieAuthentication();
+
+            app.UseOpenIdConnectAuthentication(new OpenIdConnectOptions
+            {
+                ClientId = Configuration["Authentication:AzureAd:ClientId"],
+                Authority = Configuration["Authentication:AzureAd:AADInstance"] + Configuration["Authentication:AzureAd:TenantId"],
+                CallbackPath = Configuration["Authentication:AzureAd:CallbackPath"]
+            });
+
 
             app.UseMvc(routes =>
             {
