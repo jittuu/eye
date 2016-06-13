@@ -118,6 +118,12 @@ textarea {
     padding: 10px;
 }
 
+.card-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .card-item {
     padding: 2px;
     margin: 2px;
@@ -132,7 +138,7 @@ textarea {
     border: 1px solid #baafaf;
     margin: 4px;
     padding: 4px;
-    max-width: 80px;
     border-radius: 3px;
     text-align: center;
+    flex: 1;
 }
