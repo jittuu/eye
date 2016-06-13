@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Eye.Web.Controllers
 {
-    [AllowAnonymous]
     public class HomeController : Controller
     {
         public IActionResult Index()

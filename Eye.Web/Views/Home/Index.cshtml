@@ -2,6 +2,27 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div>
-    <h1>Hello World!!</h1>
+<div style="max-width: 650px">
+    <div class="card">
+        <div class="card-header">
+            <h2>Price Range</h2>
+        </div>
+        <div id="price-range"></div>
+    </div>
 </div>
+
+@section scripts {
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="http://dimplejs.org/dist/dimple.v2.0.0.min.js"></script>
+    <script type="text/javascript">
+        var svg = dimple.newSvg("#price-range", 600, 500);
+        d3.json("/Stats/PriceRange", function (data) {
+            var chart = new dimple.chart(svg, data);
+            var x = chart.addCategoryAxis("x", "Range");
+            x.addOrderRule(function (a, b) { return a.MinPrice - b.MinPrice; });
+            chart.addMeasureAxis("y", "Total");
+            chart.addSeries(null, dimple.plot.bar);
+            chart.draw();
+        });
+    </script>
+}
