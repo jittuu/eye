@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Data.SqlClient;
+using Eye.Web.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +31,8 @@ namespace Eye.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AzureStorageOption>(Configuration.GetSection("AzureStorage"));
+
             var requireAuth = new AuthorizationPolicyBuilder()
                                         .RequireAuthenticatedUser()
                                         .Build();
