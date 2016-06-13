@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Edit Post";
+}
+
+@model Post
+
+<h1>Edit Post</h1>
+
+<div class="row">
+    @await Component.InvokeAsync(nameof(PostEditor), new { id = ViewBag.Id })
+</div>
+
+@section scripts {
+    <script type="text/javascript">
+        $("input.calendar").datepicker({
+            format: "mm/dd/yyyy"
+        });
+    </script>
+}

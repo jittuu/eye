@@ -49,7 +49,12 @@ namespace Eye.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> New(Post post, int shopId, IFormFile photoUpload)
+        public Task<IActionResult> New(Post post, int shopId, IFormFile photoUpload)
+        {
+            return NewOrEdit(post, shopId, photoUpload);
+        }
+
+        private async Task<IActionResult> NewOrEdit(Post post, int shopId, IFormFile photoUpload)
         {
             if (!this.ModelState.IsValid)
             {
@@ -61,27 +66,58 @@ namespace Eye.Web.Controllers
             post.ShopId = shopId;
             post.ShopName = shop.Name;
 
-            if(photoUpload != null)
+            if (photoUpload == null)
             {
-                post.ImageContainer = shop.ImageContainer;
-                post.PhotoName = Guid.NewGuid().ToString("N");
-                var ext = photoUpload.FileName.Split('.').Last();
-                var upload = new UploadFileToBlobAction() {
-                    ConnectionString = _azureStorageOption.ConnectionString,
-                    FileName = post.ImageContainer + "/" + post.PhotoName + "." + ext,
-                    File = photoUpload
-                };
-
-                await upload.RunAsync();
+                this.ModelState.AddModelError("", "Photo is required.");
+                ViewBag.Id = post.Id;
+                ViewBag.shopId = post.ShopId;
+                return View();
             }
 
-            var saved = await new SaveNewPostAction(_conn).RunAsync(post);
+            post.ImageContainer = shop.ImageContainer;
+            post.PhotoName = Guid.NewGuid().ToString("N");
+            var ext = photoUpload.FileName.Split('.').Last();
+            var upload = new UploadFileToBlobAction()
+            {
+                ConnectionString = _azureStorageOption.ConnectionString,
+                FileName = post.ImageContainer + "/" + post.PhotoName + "." + ext,
+                File = photoUpload
+            };
+
+            await upload.RunAsync();
+
+            var saved = 0;
+            if (post.Id < 1)
+            {
+                saved = await new SaveNewPostAction(_conn).RunAsync(post);
+            }
+            else
+            {
+                saved = await new UpdatePostAction(_conn).RunAsync(post);
+            }
+
             if (saved < 1)
             {
                 return StatusCode(500);
             }
 
             return RedirectToAction("Details", "Shops", new { id = shopId });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var post = await _conn.GetPostByIdAsync(id);
+
+            ViewBag.Id = id;
+            ViewBag.shopId = post.ShopId;
+            return View();
+        }
+
+        [HttpPost]
+        public Task<IActionResult> Edit(Post post, int shopId, IFormFile photoUpload)
+        {
+            return NewOrEdit(post, shopId, photoUpload);
         }
     }
 }
