@@ -52,7 +52,8 @@
                 </td>
                 <td>@s.TotalPosts</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@s.Id">Edit</a>
+                    <a asp-action="Details" asp-route-id="@s.Id">Details</a> | 
+                    <a asp-action="Edit" asp-route-id="@s.Id">Edit</a> | 
                     <a href="@s.PageURL" target="_blank">
                         <i class="fa fa-facebook fa-fw" aria-hidden="true"></i>
                     </a>

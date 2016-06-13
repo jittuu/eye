@@ -1,0 +1,48 @@
+﻿@model Shop
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<div class="row">
+    <div class="card">
+        <h1>@Model.Name</h1>
+        <div>
+            <div class="card-item">
+                <span><i class="fa fa-thumbs-up fa-fw" aria-hidden="true"></i>@Model.TotalLikes.ToString("0,00")</span>
+            </div>
+            <div class="card-item">
+                <span><i class="fa fa-clock-o fa-fw" aria-hidden="true"></i>@Model.LastPostedDate.ToString("dd/MM/yyyy")</span>
+            </div>
+            <div class="shop-type">
+                @if (Model.IsOnStock)
+                {
+                    <div class="shop-type-item">
+                        <div>In Stock</div>
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                }
+
+                @if (Model.IsPreOrder)
+                {
+                    <div class="shop-type-item">
+                        <div>Pre Order</div>
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                }
+
+                @if (Model.IsPrePaid)
+                {
+                    <div class="shop-type-item">
+                        <div>Pre-Paid</div>
+                        <i class="fa fa-check-circle"></i>
+                    </div>
+                }
+            </div>
+        </div>
+        <hr />
+        <div>
+            @await Component.InvokeAsync(nameof(PostList), new { shopId = Model.Id })
+        </div>
+    </div>
+</div>

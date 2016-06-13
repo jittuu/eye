@@ -24,6 +24,13 @@ namespace Eye.Web.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            var shop = await _conn.GetShopByIdAsync(id);
+            return View(shop);
+        }
+
+        [HttpGet]
         public IActionResult New()
         {
             return View();

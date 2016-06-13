@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Post>
+
+<table class="table">
+    <caption>@Model.Count() Posts</caption>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Posted Date</th>
+            <th>Likes</th>
+            <th>Shares</th>
+            <th>Pre-order Days</th>
+            <th>Photo</th>
+            <th>Facebook</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td><span class="mm-text">@p.ItemName</span></td>
+                <td>@p.Price.ToString("0.00")</td>
+                <td>@p.PostedDate.ToString("dd/MM/yyyy")</td>
+                <td>@p.TotalLikes</td>
+                <td>@p.Shares</td>
+                <td>@p.PreOrderDays</td>
+                <td>
+                    <a href="@p.PhotoFullPath()" data-lightbox="shop-posts">
+                        <i class="fa fa-picture-o"></i>
+                    </a>
+                </td>
+                <td>
+                    <a href="@p.PostURL" target="_blank">
+                        <i class="fa fa-facebook"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

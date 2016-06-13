@@ -110,3 +110,29 @@ textarea {
 .no-max {
     max-width: none;
 }
+
+.card {
+    border: 1px solid #baafaf;
+    box-shadow: 2px 2px 6px 0px #333;
+    margin: 10px;
+    padding: 10px;
+}
+
+.card-item {
+    padding: 2px;
+    margin: 2px;
+}
+
+.shop-type {
+    display: flex;
+    flex-direction: row;
+}
+
+.shop-type-item {
+    border: 1px solid #baafaf;
+    margin: 4px;
+    padding: 4px;
+    max-width: 80px;
+    border-radius: 3px;
+    text-align: center;
+}
