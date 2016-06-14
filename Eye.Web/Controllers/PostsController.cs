@@ -26,6 +26,7 @@ namespace Eye.Web.Controllers
             var pageSize = 50;
 
             var posts = await new AllPostQuery(_conn).Run();
+            posts = posts.OrderByDescending(p => p.Id);
             var pageCount = (int)posts.Count() / pageSize;
             var vm = new PostListViewModel() { Posts = posts.Skip((pageNo - 1) * pageSize).Take(pageSize) };
             if (pageNo > 1)
