@@ -43,7 +43,7 @@ namespace Eye.Web.Models
 
         public string PhotoFullPath()
         {
-            return string.Format("{0}/{1}/{2}.jpg", _blobContainerPath, ImageContainer, PhotoName);
+            return string.Format("{0}/{1}/{2}", _blobContainerPath, ImageContainer, PhotoName);
         }
     }
 }

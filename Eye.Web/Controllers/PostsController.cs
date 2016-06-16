@@ -76,12 +76,11 @@ namespace Eye.Web.Controllers
             }
 
             post.ImageContainer = shop.ImageContainer;
-            post.PhotoName = Guid.NewGuid().ToString("N");
-            var ext = photoUpload.FileName.Split('.').Last();
+            post.PhotoName = Guid.NewGuid().ToString("N") + photoUpload.FileName.Split('.').Last();
             var upload = new UploadFileToBlobAction()
             {
                 ConnectionString = _azureStorageOption.ConnectionString,
-                FileName = post.ImageContainer + "/" + post.PhotoName + "." + ext,
+                FileName = post.ImageContainer + "/" + post.PhotoName,
                 File = photoUpload
             };
 
