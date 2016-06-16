@@ -35,9 +35,9 @@
         <span asp-validation-for="PreOrderDays" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="PostedDate">Last Posted Date</label>
-        <input asp-for="PostedDate" asp-format="{0:MM/dd/yyyy}" class="form-control calendar" readonly="readonly" />
-        <span asp-validation-for="PostedDate" class="text-danger"></span>
+        <label asp-for="PostedDateStr">Last Posted Date</label>
+        <input asp-for="PostedDateStr" class="form-control" placeholder="e.g. 13-06-16" />
+        <span asp-validation-for="PostedDateStr" class="text-danger"></span>
     </div>
     <div class="form-group">
         <label for="photoUpload">Photo</label>

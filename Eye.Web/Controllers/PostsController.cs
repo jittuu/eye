@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Eye.Web.Models;
@@ -70,6 +71,13 @@ namespace Eye.Web.Controllers
                 return View();
             }
 
+            var postedDate = DateTime.UtcNow;
+            if(!DateTime.TryParseExact(post.PostedDateStr, "dd-MM-yy", null, DateTimeStyles.None, out postedDate))
+            {
+                this.ModelState.AddModelError("PostedDateStr", "Posted Date must be in 14-06-16 (dd-mm-yy) format.");
+                return View();
+            }
+
             var shop = await _conn.GetShopByIdAsync(shopId);
 
             post.ShopId = shopId;
@@ -92,6 +100,7 @@ namespace Eye.Web.Controllers
 
                 await upload.RunAsync();
             }
+            post.PostedDate = postedDate;
 
             var saved = 0;
             if (post.Id < 1)

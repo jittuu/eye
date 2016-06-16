@@ -20,8 +20,10 @@ namespace Eye.Web.Models
         [Required]
         public string ItemName { get; set; }
 
-        [Required]
         public DateTime PostedDate { get; set; }
+
+        [RegularExpression(@"\d{2}-\d{2}-\d{2}", ErrorMessage = "Posted Date must be in 14-06-16 (dd-mm-yy) format.")]
+        public string PostedDateStr { get; set; }
 
         [Required]
         public int TotalLikes { get; set; }
