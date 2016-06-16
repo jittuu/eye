@@ -52,6 +52,14 @@ namespace Eye.Web.Controllers
         [HttpPost]
         public Task<IActionResult> New(Post post, int shopId, IFormFile photoUpload)
         {
+            if (photoUpload == null)
+            {
+                this.ModelState.AddModelError("", "Photo is required.");
+                ViewBag.Id = post.Id;
+                ViewBag.shopId = post.ShopId;
+                return Task.FromResult(View() as IActionResult);
+            }
+
             return NewOrEdit(post, shopId, photoUpload);
         }
 
@@ -66,25 +74,24 @@ namespace Eye.Web.Controllers
 
             post.ShopId = shopId;
             post.ShopName = shop.Name;
-
+            post.ImageContainer = shop.ImageContainer;
             if (photoUpload == null)
             {
-                this.ModelState.AddModelError("", "Photo is required.");
-                ViewBag.Id = post.Id;
-                ViewBag.shopId = post.ShopId;
-                return View();
+                var exPost = await _conn.GetPostByIdAsync(post.Id);
+                post.PhotoName = exPost?.PhotoName;
             }
-
-            post.ImageContainer = shop.ImageContainer;
-            post.PhotoName = Guid.NewGuid().ToString("N") + photoUpload.FileName.Split('.').Last();
-            var upload = new UploadFileToBlobAction()
+            else
             {
-                ConnectionString = _azureStorageOption.ConnectionString,
-                FileName = post.ImageContainer + "/" + post.PhotoName,
-                File = photoUpload
-            };
+                post.PhotoName = Guid.NewGuid().ToString("N") + "." + photoUpload.FileName.Split('.').Last();
+                var upload = new UploadFileToBlobAction()
+                {
+                    ConnectionString = _azureStorageOption.ConnectionString,
+                    FileName = post.ImageContainer + "/" + post.PhotoName,
+                    File = photoUpload
+                };
 
-            await upload.RunAsync();
+                await upload.RunAsync();
+            }
 
             var saved = 0;
             if (post.Id < 1)
